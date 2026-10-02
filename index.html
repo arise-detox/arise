@@ -3,11 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Politique de sécurité du contenu : seuls nos fichiers, Google Fonts, la bibliothèque Supabase (jsDelivr, version figée + empreinte)
+     et ton projet Supabase (*.supabase.co) sont autorisés. Si tu utilises un domaine Supabase personnalisé, ajoute-le dans connect-src.
+     Le petit script « thème » plus bas est autorisé par son empreinte (sha256) : si tu le modifies, recalcule l'empreinte. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'sha256-0OG+FMRD8id7Jq03AbMQMMKeeaxDF6ByykpauYphtRA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>ARISE — Un peu plus de toi</title>
 <meta name="description" content="Sept invitations pour observer, écrire et créer hors écran, à ton rythme.">
 <meta property="og:title" content="ARISE — Un peu plus de toi">
 <meta property="og:description" content="Sept invitations pour observer, écrire et créer hors écran, à ton rythme.">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<!-- Aperçu des liens partagés (WhatsApp, iMessage…) : adresse du site publié. À changer si tu changes d'adresse. -->
+<meta property="og:url" content="https://arise-detox.github.io/arise/">
+<meta property="og:image" content="https://arise-detox.github.io/arise/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://arise-detox.github.io/arise/icon-512.png">
 <meta name="color-scheme" content="light dark">
 <meta name="application-name" content="ARISE">
 <meta name="apple-mobile-web-app-title" content="ARISE">
@@ -20,16 +31,18 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&family=Nunito:wght@400;600;700;800&display=swap" crossorigin="anonymous">
 <link rel="stylesheet" href="styles.css">
+<script>try{var a=JSON.parse(localStorage.getItem('horschamp:v1')).profile.appearance;if(a==='light'||a==='dark'){document.documentElement.setAttribute('data-theme',a)}}catch(e){}</script>
+<script src="config.js" defer></script>
+<script src="legal.js" defer></script>
+<script src="content.js" defer></script>
+<script src="app.js" defer></script>
 </head>
 <body>
-<div id="app" class="app-shell"></div>
+<div id="app" class="app-shell"><div class="boot" aria-hidden="true">ARISE</div></div>
 <noscript><p style="padding:24px">Cette page a besoin de JavaScript pour fonctionner.</p></noscript>
-<script src="config.js"></script>
-<script src="legal.js"></script>
-<script src="app.js"></script>
 </body>
 </html>

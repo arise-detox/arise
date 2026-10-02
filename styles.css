@@ -59,14 +59,12 @@ button{color:inherit}select{color:var(--ink)}.ic{flex-shrink:0}.back-button>span
 /* ===== Thème « candy sérénité » : pastels sucrés, formes rondes, polices douces ===== */
 :root{--gloss:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,0) 55%)}
 body{font-family:var(--font-body);font-size:17px;background:radial-gradient(900px 420px at 100% -8%,var(--pink-soft),transparent 60%),radial-gradient(800px 420px at -8% 0,var(--mint-soft),transparent 58%),var(--paper);background-repeat:no-repeat;color:var(--ink)}
-h1,h2,h3,.brand,.summary-card>strong,.journey-row strong,.history-main strong,.day strong,.site-header nav button,.primary-button{font-family:var(--font-display);letter-spacing:0}
+h1,h2,h3,.brand,.summary-card>strong,.journey-row strong,.history-main strong,.day strong,.primary-button{font-family:var(--font-display);letter-spacing:0}
 h1{font-weight:600}h2,h3{font-weight:600}
 .brand{font-size:28px;font-weight:700;letter-spacing:.06em}
 .eyebrow,.card-meta span:first-child{text-transform:lowercase;letter-spacing:.02em;font-size:14px;font-weight:800;color:var(--blue)}
 .eyebrow::first-letter,.card-meta span:first-child::first-letter,.month-label::first-letter{text-transform:uppercase}
 .month-label{text-transform:none;letter-spacing:0;font-size:15px;color:var(--blue);font-family:var(--font-display);font-weight:500}
-.site-header nav button{font-size:16px;font-weight:500}
-.site-header nav button.nav-active{border-bottom-width:3px}
 .brand-icon{background:var(--lemon-soft)}
 .small-tag{background:var(--surface);border-width:2px;font-weight:700}
 
@@ -104,7 +102,7 @@ h1{font-weight:600}h2,h3{font-weight:600}
 .day.selected{background:var(--blue);border-color:var(--blue);color:var(--on-blue);box-shadow:0 4px 0 var(--btn-edge)}
 .step-number{border-radius:16px}
 
-@media(max-width:520px){.site-header nav{gap:14px;justify-content:space-between}.site-header nav button{font-size:14px}.brand{font-size:24px}}
+@media(max-width:520px){.brand{font-size:24px}}
 
 /* ===== Défis détox ===== */
 .tone-lilac{--tone:var(--lilac-soft);--tone-strong:var(--lilac)}.tone-mint{--tone:var(--mint-soft);--tone-strong:var(--mint)}
@@ -194,18 +192,12 @@ main.slide-in-prev{animation:slide-in-prev .3s cubic-bezier(.2,.8,.2,1)}
 :root{font-synthesis-weight:none}   /* Audiowide n'a qu'un poids : pas de faux gras */
 h1,h2,h3{overflow-wrap:break-word}
 .brand{letter-spacing:.08em;font-weight:400}
-.site-header nav button{font-family:var(--font-body);font-weight:600}
-@media(max-width:360px){.site-header nav{gap:6px}.site-header nav button{font-size:13px}}
-@media(max-width:340px){.site-header nav{gap:4px}.site-header nav button{font-size:12.5px}}
 
 /* ===== Logo ARISE : cerveau rouge sur fond multicolore ===== */
 .brand-icon{width:46px;height:46px;margin-right:14px;background:conic-gradient(from 30deg,var(--pink),var(--peach),var(--lemon),var(--mint),var(--sky),var(--lilac),var(--pink));box-shadow:inset 0 -4px 0 rgba(0,0,0,.1),0 3px 0 var(--shadow)}
 .brain-logo .lobe{fill:var(--brain-red);stroke:#fff;stroke-width:1.4;stroke-linejoin:round}
 .brain-logo .fold{fill:none;stroke:#fff;stroke-width:1.4;stroke-linecap:round}
 
-/* ===== Navigation : libelles courts sur petit ecran (5 rubriques) ===== */
-.site-header nav button .short{display:none}
-@media(max-width:560px){.site-header nav button .full{display:none}.site-header nav button .short{display:inline}.site-header nav{gap:10px}}
 
 /* ===== Carte des sorties gratuites ===== */
 .tone-lemon{--tone:var(--lemon-soft);--tone-strong:var(--lemon)}.tone-peach{--tone:var(--peach-soft);--tone-strong:var(--peach)}
@@ -279,38 +271,7 @@ a.primary-button{display:inline-flex;text-decoration:none;width:fit-content}
 .file-pick:focus-within{outline:3px solid var(--focus);outline-offset:3px;border-radius:6px}
 @media(max-width:520px){.palier-tools .mode-switch{width:100%;justify-content:space-between}.palier-tools .mode-switch button{padding:7px 10px}}
 
-/* ===== Ruban scintillant sur la rubrique choisie (seule la rubrique active s'anime) ===== */
-.site-header nav{gap:4px}
-.site-header nav button{position:relative;padding:9px 16px;border:0!important;border-radius:0;isolation:isolate;transition:color .2s}
-.site-header nav button.nav-active{
-  color:var(--on-strong);
-  background:linear-gradient(100deg,var(--pink) 0%,var(--peach) 22%,var(--lemon) 42%,var(--mint) 62%,var(--sky) 82%,var(--lilac) 100%);
-  border-radius:8px;
-  font-weight:700}
-.site-header nav button.nav-active::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);
-  background-size:250% 100%;background-position:100% 0;animation:ribbon-sheen 2.4s ease-in-out infinite}
-@keyframes ribbon-sheen{0%{background-position:100% 0}65%,100%{background-position:0 0}}
-.site-header nav button .full,.site-header nav button .short{position:relative;z-index:1}
-.sparkles{position:absolute;inset:0;z-index:0;pointer-events:none}
-.sparkles i{position:absolute;width:9px;height:9px;background:#fff;opacity:0;
-  clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:twinkle 1.9s ease-in-out infinite}
-.sparkles i:nth-child(1){left:14%;top:14%;animation-delay:0s}
-.sparkles i:nth-child(2){left:42%;top:62%;width:7px;height:7px;animation-delay:.55s}
-.sparkles i:nth-child(3){left:70%;top:12%;width:8px;height:8px;animation-delay:1.1s}
-.sparkles i:nth-child(4){left:86%;top:58%;width:6px;height:6px;animation-delay:1.5s}
-@keyframes twinkle{0%,100%{opacity:0;transform:scale(.2) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
-.site-header nav button.nav-active .nav-dot{background:var(--on-strong)}
-.site-header nav button:not(.nav-active):hover{color:var(--blue)}
-@media(max-width:560px){.site-header nav{gap:2px}.site-header nav button{padding:8px 9px}.site-header nav button.nav-active{border-radius:8px}}
-@media(max-width:360px){.site-header nav button{padding:8px 6px}}
 
-/* ===== En-tête : partage et profil ===== */
-.header-actions{display:flex;align-items:center;gap:8px}
-.icon-btn{width:42px;height:42px;border-radius:50%;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--ink);padding:0;font-size:20px;line-height:1;transition:border-color .15s,transform .1s}
-.icon-btn:hover{border-color:var(--blue)}.icon-btn:active{transform:scale(.94)}
-.avatar-btn{background:var(--lemon-soft)}
-@media(max-width:520px){.site-header .brand{order:1}.header-actions{order:2;margin-left:auto}.site-header nav{order:3}.icon-btn{width:38px;height:38px}}
 
 /* ===== Fenêtres (profil, partage) ===== */
 .modal-open{overflow:hidden}
@@ -385,18 +346,11 @@ footer span.legal-links{display:flex}
 .meetup-main p{margin:0 0 4px}
 @media(max-width:700px){.group-filter{grid-template-columns:1fr 1fr}.group-filter .primary-button,.group-filter .share-btn{grid-column:1/-1;justify-content:center}}
 @media(max-width:520px){.meetup-card{grid-template-columns:1fr}.meetup-date{min-height:0;justify-self:start;padding:6px 14px}.form-card{padding:18px}}
-@media(max-width:560px){.site-header nav button{font-size:13px}}
-@media(max-width:380px){.site-header nav button{padding:8px 5px;font-size:12px}.site-header nav button.nav-active{border-radius:8px}}
 
-/* ===== Ruban : un rectangle qui surligne le titre de la rubrique choisie ===== */
-.site-header nav button.nav-active{border-radius:8px;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4),0 3px 10px rgba(106,73,224,.28)}
-.site-header nav button.nav-active::before{border-radius:inherit}
-.site-header nav button.nav-active .sparkles{border-radius:inherit}
 
 /* ===== Photo de profil ===== */
 .avatar-img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .av-inline{width:1.35em;height:1.35em;border-radius:50%;object-fit:cover;vertical-align:-.3em;margin-right:.3em;display:inline-block}
-.avatar-btn{overflow:hidden;padding:0}
 .photo-row{display:flex;align-items:center;gap:16px;margin:0 0 16px}
 .photo-preview{flex:0 0 auto;width:76px;height:76px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:var(--lemon-soft);font-size:36px;border:3px solid var(--surface);box-shadow:0 4px 0 var(--shadow)}
 .photo-actions{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
@@ -404,37 +358,146 @@ footer span.legal-links{display:flex}
 .photo-actions .share-btn:focus-within{outline:3px solid var(--focus);outline-offset:3px}
 .photo-actions .text-button{padding:6px 0}
 .pill .av-inline{margin-right:.35em}
-/* ===== Ruban « gel » : translucide, léger flou, reflet brillant ===== */
-.site-header nav button.nav-active{
-  color:var(--ink);
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.08) 52%,rgba(255,255,255,0) 100%),
-    linear-gradient(100deg,rgba(255,156,203,.42) 0%,rgba(255,180,138,.4) 22%,rgba(255,217,102,.38) 42%,rgba(143,227,195,.4) 62%,rgba(143,210,255,.42) 82%,rgba(195,178,255,.45) 100%);
-  -webkit-backdrop-filter:blur(7px) saturate(170%);backdrop-filter:blur(7px) saturate(170%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 0 0 1px rgba(255,255,255,.38),inset 0 -7px 12px rgba(106,73,224,.12),0 6px 16px rgba(106,73,224,.2)}
-.site-header nav button.nav-active::before{
-  background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.6) 50%,transparent 62%);
-  background-size:250% 100%;background-position:100% 0}
-.sparkles i{background:#fff;filter:drop-shadow(0 0 3px rgba(255,255,255,.9))}
 
-/* ===== Bandeau du site : une seule ligne propre, comme avant ===== */
+
+
+/* ===== Récompenses : surprise du jour, carnet de timbres, bon retour ===== */
+.surprise-card{display:flex;align-items:center;gap:18px 22px;flex-wrap:wrap;border-radius:28px;padding:20px 26px;margin:0 0 20px;box-shadow:0 6px 0 var(--shadow);position:relative;overflow:hidden}
+.surprise-card.sealed{background:linear-gradient(115deg,var(--lilac-soft) 0%,var(--pink-soft) 52%,var(--lemon-soft) 100%)}
+.surprise-card.sealed::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.45) 50%,transparent 60%);background-size:250% 100%;background-position:100% 0;animation:ribbon-sheen 3.4s ease-in-out infinite}
+.sp-icon{position:relative;flex:0 0 auto;width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--lemon);color:var(--on-strong);box-shadow:inset 0 -5px 0 rgba(0,0,0,.12);animation:sp-wiggle 3.2s ease-in-out infinite}
+@keyframes sp-wiggle{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-12deg) scale(1.06)}95%{transform:rotate(10deg) scale(1.06)}}
+.sp-text{position:relative;flex:1 1 220px;min-width:0}
+.surprise-card h2{margin:0 0 4px;font-size:22px}.surprise-card p{margin:0}
+.surprise-card .primary-button{position:relative}
+.surprise-card.open{display:block;background:transparent;box-shadow:none;padding:0;overflow:visible}
+.reward-card{background:var(--tone);border-radius:28px;padding:22px 26px;box-shadow:0 6px 0 var(--shadow);display:grid;gap:10px}
+.reward-kind{display:inline-flex;align-items:center;gap:6px;width:fit-content;background:var(--surface);border-radius:100px;padding:4px 13px;font-size:13px;font-weight:800;color:var(--ink)}
+.reward-text{margin:0;font-size:19px;font-weight:700;line-height:1.45;max-width:60ch}
+.reward-card .source{margin:0}
+.sp-foot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:10px 4px 0}
+.sp-foot .text-button{padding:2px 0}
+.flip{animation:card-flip .65s cubic-bezier(.2,.8,.2,1)}
+@keyframes card-flip{0%{transform:perspective(700px) rotateY(88deg);opacity:0}100%{transform:perspective(700px) rotateY(0);opacity:1}}
+.back-card{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;background:var(--peach-soft);border-radius:28px;padding:20px 26px;margin:22px 0 0;box-shadow:0 6px 0 var(--shadow)}
+.back-card h2{margin:0 0 4px;font-size:22px}.back-card p{margin:0;max-width:56ch}
+.album{margin:30px 0 14px}
+.stamp-row{margin:0 0 20px}
+.stamp-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px}
+.stamp-head .tool-label{font-weight:800;color:var(--ink)}
+.stamp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.medals-grid{grid-template-columns:repeat(4,1fr)}
+.stamp{display:grid;justify-items:center;gap:6px;background:var(--tone);border:2px solid transparent;border-radius:20px;padding:12px 4px 10px;font-weight:800;box-shadow:0 4px 0 var(--shadow);transition:transform .15s}
+.stamp:hover{transform:translateY(-3px) rotate(-1.5deg)}
+.stamp-art{position:relative;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--tone-strong);color:var(--on-strong);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+.stamp-ok{position:absolute;right:-4px;bottom:-4px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--ok-ink);box-shadow:0 1px 0 var(--shadow)}
+.stamp-name{font-size:12.5px;line-height:1.2;text-align:center;color:var(--ink)}
+.stamp.locked{background:transparent;border:2px dashed var(--line);box-shadow:none}
+.stamp.locked .stamp-art{background:var(--neutral);color:var(--muted);box-shadow:none;opacity:.7}
+.stamp.locked .stamp-name{color:var(--muted);font-weight:700}
+.card-chips{display:flex;flex-wrap:wrap;gap:8px}
+.card-chip{display:inline-flex;align-items:center;gap:6px;text-align:left;background:var(--tone);border:0;border-radius:100px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--ink)}
+.card-chip:hover{filter:brightness(1.06)}
+@media(max-width:700px){.stamp-grid{grid-template-columns:repeat(4,1fr)}.medals-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.surprise-card{padding:18px 20px}.surprise-card .primary-button{width:100%}.reward-card{padding:18px 20px}.reward-text{font-size:17px}.back-card{padding:18px 20px}}
+
+/* =====================================================================
+   Bandeau du site, menu et ruban de sélection (bloc unique)
+   Le ruban est un seul élément qui glisse d'une rubrique à l'autre (placé par app.js) ;
+   la ligne continue passe sous tout le menu ; la rubrique choisie ressort un peu.
+   ===================================================================== */
 .site-header{gap:20px}
-.site-header nav{gap:6px;flex-wrap:nowrap}
-.site-header nav button{white-space:nowrap;line-height:1.2}
-.header-actions{flex-shrink:0}
-@media(max-width:1180px){.small-tag{display:none}}
-@media(max-width:1000px) and (min-width:561px){.site-header nav button .full{display:none}.site-header nav button .short{display:inline}.site-header nav button{padding:9px 14px}}
+.header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.icon-btn{width:42px;height:42px;border-radius:50%;border:2px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--ink);padding:0;font-size:20px;line-height:1;transition:border-color .15s,transform .1s}
+.icon-btn:hover{border-color:var(--blue)}.icon-btn:active{transform:scale(.94)}
+.avatar-btn{background:var(--lemon-soft);overflow:hidden}
 
-/* ===== Ruban de sélection : un ruban gel unique qui glisse d'un menu à l'autre ===== */
-.site-header nav{position:relative}
-.site-header nav button{position:relative;z-index:1}
-.site-header nav button.nav-active{background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;overflow:visible;border-radius:8px}
-.site-header nav button.nav-active::before{display:none}
-.ribbon{position:absolute;left:0;top:0;z-index:0;pointer-events:none;border-radius:8px;overflow:hidden;width:0;height:0;
+.site-header nav{position:relative;gap:6px;flex-wrap:nowrap;padding-bottom:8px}
+.site-header nav button{position:relative;z-index:1;padding:9px 16px;border:0;border-radius:0;background:transparent;font-family:var(--font-body);font-size:16px;font-weight:600;line-height:1.2;white-space:nowrap;
+  transform-origin:50% 100%;transition:color .2s,transform .35s cubic-bezier(.3,.9,.25,1)}
+.site-header nav button .short{display:none}
+.site-header nav button:not(.nav-active):hover{color:var(--blue)}
+.site-header nav button.nav-active{color:var(--ink);font-weight:800;transform:translateY(-3px) scale(1.14);text-shadow:0 0 14px rgba(255,255,255,.35)}
+:root[data-theme="light"] .site-header nav button.nav-active{text-shadow:none}
+.site-header nav button.nav-active .nav-dot{background:var(--brain-red)}
+/* Ligne continue sous le menu */
+.site-header nav::after{content:"";position:absolute;left:-6px;right:-6px;bottom:0;height:3px;border-radius:3px;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,156,203,.34),rgba(255,180,138,.3),rgba(255,217,102,.3),rgba(143,227,195,.32),rgba(143,210,255,.34),rgba(195,178,255,.36))}
+/* Ruban gel, sans bord : ses côtés et son haut s'estompent ; un segment vif éclaire la ligne sous la rubrique choisie */
+.ribbon{position:absolute;left:0;top:0;z-index:0;width:0;height:0;pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,.08) 52%,rgba(255,255,255,0) 100%),
-    linear-gradient(100deg,rgba(255,156,203,.42) 0%,rgba(255,180,138,.4) 22%,rgba(255,217,102,.38) 42%,rgba(143,227,195,.4) 62%,rgba(143,210,255,.42) 82%,rgba(195,178,255,.45) 100%);
-  -webkit-backdrop-filter:blur(7px) saturate(170%);backdrop-filter:blur(7px) saturate(170%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 0 0 1px rgba(255,255,255,.38),inset 0 -7px 12px rgba(106,73,224,.12),0 6px 16px rgba(106,73,224,.2);
+    linear-gradient(0deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,0) 75%),
+    linear-gradient(100deg,rgba(255,156,203,.5) 0%,rgba(255,180,138,.46) 22%,rgba(255,217,102,.44) 42%,rgba(143,227,195,.46) 62%,rgba(143,210,255,.5) 82%,rgba(195,178,255,.52) 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%),linear-gradient(0deg,#000 0,#000 45%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%),linear-gradient(0deg,#000 0,#000 45%,transparent 100%);
+  mask-composite:intersect;
   transition:transform .45s cubic-bezier(.3,.9,.25,1),width .45s cubic-bezier(.3,.9,.25,1)}
 .ribbon::before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.6) 50%,transparent 62%);background-size:250% 100%;background-position:100% 0;animation:ribbon-sheen 2.4s ease-in-out infinite}
+.ribbon::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px;background:linear-gradient(90deg,#ff9ccb,#ffb48a,#ffd966,#8fe3c3,#8fd2ff,#c3b2ff);box-shadow:0 0 12px rgba(195,178,255,.85)}
+@keyframes ribbon-sheen{0%{background-position:100% 0}65%,100%{background-position:0 0}}
+/* Étoiles qui scintillent dans le ruban */
+.sparkles{position:absolute;inset:0;pointer-events:none}
+.sparkles i{position:absolute;width:9px;height:9px;background:#fff;opacity:0;filter:drop-shadow(0 0 3px rgba(255,255,255,.9));
+  clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:twinkle 1.9s ease-in-out infinite}
+.sparkles i:nth-child(1){left:14%;top:14%;animation-delay:0s}
+.sparkles i:nth-child(2){left:42%;top:62%;width:7px;height:7px;animation-delay:.55s}
+.sparkles i:nth-child(3){left:70%;top:12%;width:8px;height:8px;animation-delay:1.1s}
+.sparkles i:nth-child(4){left:86%;top:58%;width:6px;height:6px;animation-delay:1.5s}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.2) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+
+/* Largeurs : noms complets sur grand écran, noms courts ensuite, une seule ligne partout */
+@media(max-width:1180px){.small-tag{display:none}}
+@media(max-width:1000px){.site-header nav button .full{display:none}.site-header nav button .short{display:inline}.site-header nav button{padding:9px 14px}}
+@media(max-width:560px){.site-header nav{gap:2px}.site-header nav button{padding:8px 9px;font-size:13px}}
+/* Sous 900 px (téléphones et tablettes en portrait) : logo et boutons sur une ligne, menu sur sa propre ligne pleine largeur */
+@media(max-width:900px){.site-header{flex-wrap:wrap;height:auto;padding:16px 0 12px;gap:12px}.site-header .brand{order:1}.header-actions{order:2;margin-left:auto}.site-header nav{order:3;width:100%;justify-content:space-between}}
+@media(max-width:520px){.icon-btn{width:38px;height:38px}}
+@media(max-width:380px){.site-header nav button{padding:8px 5px;font-size:12px}.site-header nav button.nav-active{transform:translateY(-3px) scale(1.08)}}
+
+/* =====================================================================
+   Mobile, iPhone et accessibilité
+   ===================================================================== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,label,summary,[role=button]{-webkit-tap-highlight-color:transparent}
+body{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+main:focus{outline:none}
+.skip-link{position:absolute;left:12px;top:-64px;z-index:300;background:var(--btn-bg);color:var(--btn-fg);border:0;border-radius:12px;padding:10px 16px;font-weight:800;transition:top .15s}
+.skip-link:focus{top:calc(env(safe-area-inset-top,0px) + 8px)}
+.time-select select{font-size:16px}
+.activity-card .card-meta span:first-child{color:var(--chip-ink)}
+.message .notice-x{flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;padding:0;border-radius:50%;text-decoration:none;opacity:.8}
+.message .notice-x:hover{opacity:1;background:rgba(0,0,0,.08)}
+.tip-card{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;background:var(--sky-soft);border-radius:28px;padding:18px 26px;margin:0 0 20px;box-shadow:0 6px 0 var(--shadow)}
+.tip-card h2{margin:0 0 4px;font-size:20px}.tip-card p{margin:0;max-width:58ch;font-size:15px}
+@media(pointer:coarse){
+  input,select,textarea{font-size:16px}
+  .site-header nav button{min-height:44px;padding-top:11px;padding-bottom:11px}
+  .icon-btn{width:44px;height:44px}
+  .chip,.duration,.mode-switch button,.card-chip,.share-btn{min-height:44px}
+  .duration{padding:10px 12px}
+  .text-button{min-height:44px;display:inline-flex;align-items:center}
+  .source-link{padding:12px 0}
+  .day{min-height:56px}
+  .stamp{min-height:84px}
+}
+@media(max-width:380px){.site-header .brand{font-size:22px}}
+
+/* Écran de démarrage : jamais de page blanche pendant le chargement des scripts */
+.boot{display:grid;place-items:center;min-height:70vh;font-family:Audiowide,Nunito,system-ui,sans-serif;font-size:34px;letter-spacing:.08em;color:var(--ink);opacity:.75;animation:boot-pulse 1.4s ease-in-out infinite}
+@keyframes boot-pulse{0%,100%{opacity:.35}50%{opacity:.85}}
+
+/* Cibles tactiles : au moins 44 px quand l'écran s'utilise au doigt (sauf les très petits écrans, où six rubriques doivent tenir) */
+@media(pointer:coarse) and (min-width:361px){.site-header nav button{min-width:44px}}
+@media(pointer:coarse){.pin .bubble{width:44px;height:44px}}
+
+/* Page « Moment » : la carte surprise scellée reste une barre discrète ; le mode et la fenêtre téléphone viennent après l'activité */
+.surprise-card.sealed{padding:12px 18px;gap:10px 16px}
+.surprise-card.sealed .sp-icon{width:46px;height:46px}
+.surprise-card.sealed h2{font-size:19px;margin:0}
+.surprise-card.sealed .sp-text p{font-size:14px;margin-top:2px}
+.surprise-card.sealed .primary-button{padding:11px 20px;font-size:15px}
+.workspace + .mode-bar{margin-top:28px}
+@media(max-width:520px){.surprise-card.sealed .primary-button{width:100%}.surprise-card.sealed .sp-text p{display:none}}
+
+.keep-case{text-transform:none}
