@@ -1,0 +1,34 @@
+ARISE - site prêt à mettre en ligne
+====================================
+
+Ce dossier est un site complet (une seule page). Il n'a besoin d'aucune installation :
+index.html + les icônes + manifest.webmanifest. Le nom de la page est « ARISE ».
+
+1) Dézipper l'archive : tu obtiens un dossier avec index.html à l'intérieur.
+
+2) Le mettre en ligne sous TON nom (exemple avec Netlify Drop)
+   - Aller sur app.netlify.com/drop et glisser le DOSSIER dessus.
+   - Le site est en ligne tout de suite. Sans compte, il est supprimé au bout d'environ
+     1 heure : clique sur « Claim this site » / « Sign up for free » pour le garder.
+   - Pour choisir l'adresse : Site configuration > Site information > Change site name
+     (par exemple arise.netlify.app, si le nom est libre).
+   - Pour mettre à jour plus tard : glisser le nouveau dossier sur la page « Deploys » du site.
+
+   Alternative : Vercel Drop (vercel.com/drop) : compte gratuit demandé, tu choisis le nom
+   du projet avant de déployer (adresse du type nom.vercel.app).
+   Autre alternative : Cloudflare Drop (cloudflare.com/drop).
+   Vérifie sur le site du service que son offre gratuite te convient (elle peut évoluer).
+
+3) Sur iPhone (Safari)
+   - Ouvrir l'adresse dans Safari.
+   - Toucher le bouton Partager, puis « Sur l'écran d'accueil » : l'appli s'appelle ARISE,
+     avec son icône (cerveau rouge sur fond multicolore), et s'ouvre en plein écran.
+   - Pour la partager : envoyer simplement l'adresse. Chaque personne a son propre suivi.
+
+Bon à savoir
+   - Le suivi (moments, défis, réglages) est enregistré dans le navigateur de chaque appareil,
+     pour chaque adresse : changer d'adresse repart de zéro, et rien n'est envoyé sur Internet.
+   - La page charge ses polices depuis Google Fonts : une connexion Internet est nécessaire pour
+     les voir.
+   - La carte « Autour de moi » avec localisation fait partie du projet VS Code, pas de ce site
+     d'une seule page ; ici, la rubrique Carte propose des idées et des liens vers de vraies cartes.
