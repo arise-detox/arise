@@ -13,6 +13,7 @@ var PAGE = 10;
 var PALIER_FILTERS = ['all', 'todo', 'done'];
 var AVATARS = ['🌸', '🌿', '🌙', '☀️', '🦋', '🐢', '🌊', '⭐'];
 var APPEARANCES = ['auto', 'light', 'dark'];
+var STYLES = ['calm', 'candy'];   /* « calme » (par défaut) ou « bonbon » (le style d'origine) */
 /* Photo de profil : petit JPEG carré (data URL). On ne l'affiche jamais sans avoir vérifié ce format strict. */
 var PHOTO_RE = /^data:image\/jpeg;base64,[A-Za-z0-9+\/]+={0,2}$/;
 function validPhoto(s) { return typeof s === 'string' && s.length <= 40000 && PHOTO_RE.test(s); }
@@ -146,7 +147,7 @@ if (contentErrors.length) {
 var canStore = true;
 try { localStorage.setItem(KEY + ':probe', '1'); localStorage.removeItem(KEY + ':probe'); } catch (e) { canStore = false; }
 
-function fresh() { return { profile: { name: '', avatar: '', photo: '', welcomed: false, installTip: false, appearance: 'auto', theme: 'outside', duration: 5, palierFilter: 'all', mode: HY.defaultMode, essentials: HY.defaultEssentials.slice(), windows: HY.defaultWindows.map(function (w) { return { start: w.start, end: w.end }; }) }, history: [], challenge: { active: null, finished: [] }, rewards: { cards: [], today: null, returns: 0, lastSeen: '', backPending: 0 } }; }
+function fresh() { return { profile: { name: '', avatar: '', photo: '', welcomed: false, installTip: false, appearance: 'auto', style: 'calm', theme: 'outside', duration: 5, palierFilter: 'all', mode: HY.defaultMode, essentials: HY.defaultEssentials.slice(), windows: HY.defaultWindows.map(function (w) { return { start: w.start, end: w.end }; }) }, history: [], challenge: { active: null, finished: [] }, rewards: { cards: [], today: null, returns: 0, lastSeen: '', backPending: 0 } }; }
 function validDate(x) { return typeof x === 'string' && !isNaN(new Date(x)); }
 function cleanRun(r) {
   if (!r || typeof r !== 'object') return null;
@@ -183,6 +184,7 @@ function sanitize(d) {
   if (d.profile && d.profile.welcomed === true) out.profile.welcomed = true;
   if (d.profile && d.profile.installTip === true) out.profile.installTip = true;
   if (d.profile && APPEARANCES.indexOf(d.profile.appearance) >= 0) out.profile.appearance = d.profile.appearance;
+  if (d.profile && STYLES.indexOf(d.profile.style) >= 0) out.profile.style = d.profile.style;
   if (d.profile && (d.profile.mode === 'strict' || d.profile.mode === 'hybrid')) out.profile.mode = d.profile.mode;
   if (d.profile && Array.isArray(d.profile.essentials)) out.profile.essentials = HY.essentials.map(function (x) { return x.id; }).filter(function (id) { return d.profile.essentials.indexOf(id) >= 0; });
   if (d.profile && validWindows(d.profile.windows)) out.profile.windows = d.profile.windows.map(function (w) { return { start: w.start, end: w.end }; });
@@ -400,10 +402,12 @@ function saveProfile(form) {
   if (first) celebrate(null, 40);
 }
 function applyAppearance() {
-  var a = data.profile.appearance, r = document.documentElement, metas = document.querySelectorAll('meta[name="theme-color"]');
+  var a = data.profile.appearance, st = data.profile.style === 'candy' ? 'candy' : 'calm', r = document.documentElement, metas = document.querySelectorAll('meta[name="theme-color"]');
   if (a === 'light' || a === 'dark') r.setAttribute('data-theme', a); else r.removeAttribute('data-theme');
+  if (st === 'candy') r.setAttribute('data-style', 'candy'); else r.removeAttribute('data-style');
   /* La barre du navigateur suit le thème choisi (en « automatique », elle suit celui de l'appareil). */
-  if (metas.length === 2) { metas[0].setAttribute('content', a === 'dark' ? '#19122b' : '#fff7fb'); metas[1].setAttribute('content', a === 'light' ? '#fff7fb' : '#19122b'); }
+  var lightBar = st === 'candy' ? '#fff7fb' : '#ffffff', darkBar = st === 'candy' ? '#19122b' : '#100f14';
+  if (metas.length === 2) { metas[0].setAttribute('content', a === 'dark' ? darkBar : lightBar); metas[1].setAttribute('content', a === 'light' ? lightBar : darkBar); }
 }
 /* On demande au navigateur de ne pas effacer les données du site si l'espace manque : seulement après un premier vrai usage (et jamais sur Firefox, où cela ouvre une fenêtre). */
 var persistAsked = false;
@@ -1334,7 +1338,10 @@ function viewPrefs() {
     '<form data-form="prefs">' + settingsFieldsets() +
     '<fieldset><legend>Apparence</legend><div class="mode-switch" role="group" aria-label="Apparence">' + [['auto', 'Automatique'], ['light', 'Clair'], ['dark', 'Sombre']].map(function (x) {
       return '<button type="button" class="' + (data.profile.appearance === x[0] ? 'on' : '') + '" aria-pressed="' + (data.profile.appearance === x[0]) + '" data-fk="app-' + x[0] + '" data-action="setAppearance" data-v="' + x[0] + '">' + x[1] + '</button>';
-    }).join('') + '</div></fieldset><fieldset><legend>J’aimerais surtout…</legend><div class="theme-options">' +
+    }).join('') + '</div></fieldset><fieldset><legend>Style</legend><div class="mode-switch" role="group" aria-label="Style">' + [['calm', 'Calme'], ['candy', 'Bonbon']].map(function (x) {
+      var cur = data.profile.style === 'candy' ? 'candy' : 'calm';
+      return '<button type="button" class="' + (cur === x[0] ? 'on' : '') + '" aria-pressed="' + (cur === x[0]) + '" data-fk="style-' + x[0] + '" data-action="setStyle" data-v="' + x[0] + '">' + x[1] + '</button>';
+    }).join('') + '</div><p class="muted" style="margin:10px 0 0">« Calme » : fond neutre, titres espacés, mouvement doux. « Bonbon » : le style coloré d’origine.</p></fieldset><fieldset><legend>J’aimerais surtout…</legend><div class="theme-options">' +
     themes.map(function (t) { return '<label class="theme-option' + (S.theme === t.id ? ' selected' : '') + '"><input type="radio" name="theme" value="' + t.id + '" data-fk="pref-' + t.id + '" data-change="prefTheme"' + (S.theme === t.id ? ' checked' : '') + '><span><strong>' + esc(t.label) + '</strong><small>' + esc(t.description) + '</small></span></label>'; }).join('') +
     '</div></fieldset><fieldset><legend>Un moment qui tient dans ma journée</legend><div class="choice-row">' +
     DURATIONS.map(function (d) { return '<button type="button" class="chip' + (S.duration === d ? ' active' : '') + '" aria-pressed="' + (S.duration === d) + '" data-fk="dur-' + d + '" data-action="duration" data-v="' + d + '">' + d + ' minutes</button>'; }).join('') +
@@ -1698,6 +1705,7 @@ app.addEventListener('click', function (e) {
     case 'viewCard': S.cardView = v; openModal('card'); break;
     case 'removeProfile': data.profile.name = ''; data.profile.avatar = ''; data.profile.photo = ''; persist(); S.modal = null; S.notice = 'Profil retiré de cet appareil. Ton suivi est conservé.'; render({ top: true }); break;
     case 'setAppearance': data.profile.appearance = v; persist(); applyAppearance(); render({ focus: '[data-fk="app-' + v + '"]' }); break;
+    case 'setStyle': if (STYLES.indexOf(v) >= 0) { data.profile.style = v; persist(); applyAppearance(); render({ focus: '[data-fk="style-' + v + '"]' }); } break;
     case 'install': if (deferredInstall) { deferredInstall.prompt(); deferredInstall = null; render(); } break;
     case 'dismissTip': data.profile.installTip = true; persist(); render(); break;
     case 'reload': location.reload(); break;
