@@ -510,7 +510,7 @@ main:focus{outline:none}
 :root:not([data-style="candy"]){--paper:#ffffff;--surface:#ffffff;--ink:#1b1922;--muted:#6a6773;--line:#e7e5ec;--blue:#1b1922;--btn-bg:#1b1922;--btn-fg:#ffffff;--btn-hover:#000000;--btn-edge:transparent;--on-blue:#ffffff;--chip-ink:#1b1922;--tint:#f2f0f7;--hover:#f6f5f9;--neutral:#f1f0f5;--track:#e7e5ec;--sel-sub:#d9d6e2;--soft-ink:#4a4757;--focus:#6a49e0;--shadow:transparent;--font-display:Poppins,Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]):not([data-style="candy"]){--paper:#100f14;--surface:#1a1820;--ink:#f4f2f8;--muted:#a7a3b3;--line:#2e2b38;--blue:#f4f2f8;--btn-bg:#f4f2f8;--btn-fg:#100f14;--btn-hover:#ffffff;--btn-edge:transparent;--on-blue:#100f14;--chip-ink:#f4f2f8;--tint:#25222e;--hover:#211f29;--neutral:#25222e;--track:#2e2b38;--sel-sub:#4a4757;--soft-ink:#c8c4d6;--focus:#b7a4ff;--shadow:transparent;--font-display:Poppins,Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;}}
 :root[data-theme="dark"]:not([data-style="candy"]){--paper:#100f14;--surface:#1a1820;--ink:#f4f2f8;--muted:#a7a3b3;--line:#2e2b38;--blue:#f4f2f8;--btn-bg:#f4f2f8;--btn-fg:#100f14;--btn-hover:#ffffff;--btn-edge:transparent;--on-blue:#100f14;--chip-ink:#f4f2f8;--tint:#25222e;--hover:#211f29;--neutral:#25222e;--track:#2e2b38;--sel-sub:#4a4757;--soft-ink:#c8c4d6;--focus:#b7a4ff;--shadow:transparent;--font-display:Poppins,Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;}
-:root:not([data-style="candy"]) body{background:var(--paper);color:var(--ink);font-size:16px}
+:root:not([data-style="candy"]) body{background:var(--paper);color:var(--ink);font-size:16px;overflow-x:hidden}
 :root:not([data-style="candy"]) body::before{content:"Aucun classement · À ton rythme";display:block;background:var(--ink);color:var(--paper);text-align:center;font-family:var(--font-display);font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:11px 12px;line-height:1.3}
 @media(max-width:380px){
 :root:not([data-style="candy"]) body::before{font-size:9px;letter-spacing:.12em}
@@ -588,3 +588,13 @@ main:focus{outline:none}
 @media(max-width:520px){
 :root:not([data-style="candy"]) .modal{border-radius:16px 16px 0 0}
 }
+
+/* ===== Arrière-plan animé : symboles d'éveil, de cerveau et de science (montent lentement et tournent) ===== */
+.sci-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.sci{position:absolute;bottom:-100px;display:block;color:var(--tone,var(--ink));opacity:var(--op,.1);animation:sci-rise var(--rise,90s) linear infinite;animation-delay:var(--delay,0s);will-change:transform}
+.sci svg{display:block;width:100%;height:auto;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;animation:sci-spin var(--spin,80s) linear infinite;animation-direction:var(--dir,normal)}
+@keyframes sci-rise{from{transform:translateY(0)}to{transform:translateY(calc(-100vh - 220px))}}
+@keyframes sci-spin{to{transform:rotate(360deg)}}
+.app-shell{position:relative;z-index:1}
+html[data-bg="off"] .sci-layer{display:none}
+@media(prefers-reduced-motion:reduce){.sci-layer{display:none}}

@@ -1,4 +1,4 @@
-/* ARISE : cache pour fonctionner hors connexion.
+﻿/* ARISE : cache pour fonctionner hors connexion.
    - Pages, scripts et icônes : réseau d'abord (les mises à jour arrivent tout de suite, revalidées à chaque ouverture),
      cache en secours hors connexion.
    - Polices Google : cache d'abord, rafraîchies en arrière-plan.
@@ -6,7 +6,7 @@
    ATTENTION : tous les sites d'une même adresse (par exemple arise-detox.github.io/arise et arise-detox.github.io/autre-projet)
    partagent le même stockage de caches. ARISE ne supprime donc que ses propres caches (nom commençant par « arise- »)
    et se répare tout seul si un autre site a effacé le sien. */
-var VERSION = 'arise-v12';
+var VERSION = 'arise-v13';
 var PREFIX = 'arise-';
 var SHELL = ['./', 'index.html', 'styles.css', 'app.js', 'content.js', 'config.js', 'legal.js', 'manifest.webmanifest', 'favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 var FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];

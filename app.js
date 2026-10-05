@@ -13,7 +13,8 @@ var PAGE = 10;
 var PALIER_FILTERS = ['all', 'todo', 'done'];
 var AVATARS = ['🌸', '🌿', '🌙', '☀️', '🦋', '🐢', '🌊', '⭐'];
 var APPEARANCES = ['auto', 'light', 'dark'];
-var STYLES = ['calm', 'candy'];   /* « calme » (par défaut) ou « bonbon » (le style d'origine) */
+var STYLES = ['calm', 'candy'];
+var BGS = ['on', 'off'];   /* arrière-plan animé de symboles (cerveau, science) */   /* « calme » (par défaut) ou « bonbon » (le style d'origine) */
 /* Photo de profil : petit JPEG carré (data URL). On ne l'affiche jamais sans avoir vérifié ce format strict. */
 var PHOTO_RE = /^data:image\/jpeg;base64,[A-Za-z0-9+\/]+={0,2}$/;
 function validPhoto(s) { return typeof s === 'string' && s.length <= 40000 && PHOTO_RE.test(s); }
@@ -147,7 +148,7 @@ if (contentErrors.length) {
 var canStore = true;
 try { localStorage.setItem(KEY + ':probe', '1'); localStorage.removeItem(KEY + ':probe'); } catch (e) { canStore = false; }
 
-function fresh() { return { profile: { name: '', avatar: '', photo: '', welcomed: false, installTip: false, appearance: 'auto', style: 'calm', theme: 'outside', duration: 5, palierFilter: 'all', mode: HY.defaultMode, essentials: HY.defaultEssentials.slice(), windows: HY.defaultWindows.map(function (w) { return { start: w.start, end: w.end }; }) }, history: [], challenge: { active: null, finished: [] }, rewards: { cards: [], today: null, returns: 0, lastSeen: '', backPending: 0 } }; }
+function fresh() { return { profile: { name: '', avatar: '', photo: '', welcomed: false, installTip: false, appearance: 'auto', style: 'calm', bg: 'on', theme: 'outside', duration: 5, palierFilter: 'all', mode: HY.defaultMode, essentials: HY.defaultEssentials.slice(), windows: HY.defaultWindows.map(function (w) { return { start: w.start, end: w.end }; }) }, history: [], challenge: { active: null, finished: [] }, rewards: { cards: [], today: null, returns: 0, lastSeen: '', backPending: 0 } }; }
 function validDate(x) { return typeof x === 'string' && !isNaN(new Date(x)); }
 function cleanRun(r) {
   if (!r || typeof r !== 'object') return null;
@@ -185,6 +186,7 @@ function sanitize(d) {
   if (d.profile && d.profile.installTip === true) out.profile.installTip = true;
   if (d.profile && APPEARANCES.indexOf(d.profile.appearance) >= 0) out.profile.appearance = d.profile.appearance;
   if (d.profile && STYLES.indexOf(d.profile.style) >= 0) out.profile.style = d.profile.style;
+  if (d.profile && BGS.indexOf(d.profile.bg) >= 0) out.profile.bg = d.profile.bg;
   if (d.profile && (d.profile.mode === 'strict' || d.profile.mode === 'hybrid')) out.profile.mode = d.profile.mode;
   if (d.profile && Array.isArray(d.profile.essentials)) out.profile.essentials = HY.essentials.map(function (x) { return x.id; }).filter(function (id) { return d.profile.essentials.indexOf(id) >= 0; });
   if (d.profile && validWindows(d.profile.windows)) out.profile.windows = d.profile.windows.map(function (w) { return { start: w.start, end: w.end }; });
@@ -405,6 +407,7 @@ function applyAppearance() {
   var a = data.profile.appearance, st = data.profile.style === 'candy' ? 'candy' : 'calm', r = document.documentElement, metas = document.querySelectorAll('meta[name="theme-color"]');
   if (a === 'light' || a === 'dark') r.setAttribute('data-theme', a); else r.removeAttribute('data-theme');
   if (st === 'candy') r.setAttribute('data-style', 'candy'); else r.removeAttribute('data-style');
+  if (data.profile.bg === 'off') r.setAttribute('data-bg', 'off'); else r.removeAttribute('data-bg');
   /* La barre du navigateur suit le thème choisi (en « automatique », elle suit celui de l'appareil). */
   var lightBar = st === 'candy' ? '#fff7fb' : '#ffffff', darkBar = st === 'candy' ? '#19122b' : '#100f14';
   if (metas.length === 2) { metas[0].setAttribute('content', a === 'dark' ? darkBar : lightBar); metas[1].setAttribute('content', a === 'light' ? lightBar : darkBar); }
@@ -1341,7 +1344,10 @@ function viewPrefs() {
     }).join('') + '</div></fieldset><fieldset><legend>Style</legend><div class="mode-switch" role="group" aria-label="Style">' + [['calm', 'Calme'], ['candy', 'Bonbon']].map(function (x) {
       var cur = data.profile.style === 'candy' ? 'candy' : 'calm';
       return '<button type="button" class="' + (cur === x[0] ? 'on' : '') + '" aria-pressed="' + (cur === x[0]) + '" data-fk="style-' + x[0] + '" data-action="setStyle" data-v="' + x[0] + '">' + x[1] + '</button>';
-    }).join('') + '</div><p class="muted" style="margin:10px 0 0">« Calme » : fond neutre, titres espacés, mouvement doux. « Bonbon » : le style coloré d’origine.</p></fieldset><fieldset><legend>J’aimerais surtout…</legend><div class="theme-options">' +
+    }).join('') + '</div><p class="muted" style="margin:10px 0 0">« Calme » : fond neutre, titres espacés, mouvement doux. « Bonbon » : le style coloré d’origine.</p></fieldset><fieldset><legend>Arrière-plan</legend><div class="mode-switch" role="group" aria-label="Arrière-plan">' + [['on', 'Animé'], ['off', 'Aucun']].map(function (x) {
+      var cur = data.profile.bg === 'off' ? 'off' : 'on';
+      return '<button type="button" class="' + (cur === x[0] ? 'on' : '') + '" aria-pressed="' + (cur === x[0]) + '" data-fk="bg-' + x[0] + '" data-action="setBg" data-v="' + x[0] + '">' + x[1] + '</button>';
+    }).join('') + '</div><p class="muted" style="margin:10px 0 0">De discrets symboles de science et de cerveau montent lentement derrière l’appli. Ils s’arrêtent si ton appareil réduit les animations.</p></fieldset><fieldset><legend>J’aimerais surtout…</legend><div class="theme-options">' +
     themes.map(function (t) { return '<label class="theme-option' + (S.theme === t.id ? ' selected' : '') + '"><input type="radio" name="theme" value="' + t.id + '" data-fk="pref-' + t.id + '" data-change="prefTheme"' + (S.theme === t.id ? ' checked' : '') + '><span><strong>' + esc(t.label) + '</strong><small>' + esc(t.description) + '</small></span></label>'; }).join('') +
     '</div></fieldset><fieldset><legend>Un moment qui tient dans ma journée</legend><div class="choice-row">' +
     DURATIONS.map(function (d) { return '<button type="button" class="chip' + (S.duration === d ? ' active' : '') + '" aria-pressed="' + (S.duration === d) + '" data-fk="dur-' + d + '" data-action="duration" data-v="' + d + '">' + d + ' minutes</button>'; }).join('') +
@@ -1705,6 +1711,7 @@ app.addEventListener('click', function (e) {
     case 'viewCard': S.cardView = v; openModal('card'); break;
     case 'removeProfile': data.profile.name = ''; data.profile.avatar = ''; data.profile.photo = ''; persist(); S.modal = null; S.notice = 'Profil retiré de cet appareil. Ton suivi est conservé.'; render({ top: true }); break;
     case 'setAppearance': data.profile.appearance = v; persist(); applyAppearance(); render({ focus: '[data-fk="app-' + v + '"]' }); break;
+    case 'setBg': if (BGS.indexOf(v) >= 0) { data.profile.bg = v; persist(); applyAppearance(); render({ focus: '[data-fk="bg-' + v + '"]' }); } break;
     case 'setStyle': if (STYLES.indexOf(v) >= 0) { data.profile.style = v; persist(); applyAppearance(); render({ focus: '[data-fk="style-' + v + '"]' }); } break;
     case 'install': if (deferredInstall) { deferredInstall.prompt(); deferredInstall = null; render(); } break;
     case 'dismissTip': data.profile.installTip = true; persist(); render(); break;
@@ -1875,6 +1882,35 @@ window.addEventListener('storage', function (e) {
   /* On n'efface le lien que s'il s'agit d'un lien d'ami : le retour de l'e-mail de confirmation en a besoin pour te connecter. */
   if (c) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* facultatif */ } }
 })();
+/* ---------- Arrière-plan animé : symboles d'éveil, de cerveau et de science (décor, hors de l'appli) ---------- */
+(function () {
+  var S = {
+    brain: '<path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/>',
+    atom: '<circle cx="12" cy="12" r="1.3"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
+    dna: '<path d="M8 2c0 5 8 5 8 10s-8 5-8 10"/><path d="M16 2c0 5-8 5-8 10s8 5 8 10"/><path d="M9.2 5h5.6M8.4 9h7.2M8.4 15h7.2M9.2 19h5.6"/>',
+    bulb: '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/>',
+    neuron: '<circle cx="12" cy="12" r="2.6"/><path d="M12 9.4V4M12 4 9.8 2M12 4l2.2-2M9.9 13.5 5 16.2M14.1 13.5 19 16.2M5 16.2 2 17M5 16.2l1 3M19 16.2l3 .8M19 16.2l-1 3M12 14.6V21"/><circle cx="12" cy="21.5" r=".9"/>',
+    flask: '<path d="M9 2h6M10 2v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 8V2M7.5 15h9"/>',
+    wave: '<path d="M1 12c2-7 4-7 6 0s4 7 6 0 4-7 6 0 3 4 4 3"/>',
+    orbit: '<circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="10.5" stroke-dasharray="2 3"/>',
+    spark: '<path d="M12 2l2.2 7.3L22 12l-7.8 2.7L12 22l-2.2-7.3L2 12l7.8-2.7z"/>',
+    molecule: '<circle cx="6" cy="7" r="2.6"/><circle cx="18" cy="7" r="2.6"/><circle cx="12" cy="18" r="3"/><path d="M8.6 7h6.8M7.4 9.4l3.4 6.4M16.6 9.4l-3.4 6.4"/>'
+  };
+  var order = ['brain', 'atom', 'neuron', 'dna', 'spark', 'bulb', 'orbit', 'molecule', 'wave', 'flask', 'brain', 'atom', 'neuron', 'spark'];
+  var tones = [['var(--ink)', .07], ['var(--lilac)', .34], ['var(--mint)', .36], ['var(--pink)', .32], ['var(--sky)', .36], ['var(--ink)', .06], ['var(--peach)', .32]];
+  var html = '';
+  order.forEach(function (name, i) {
+    var left = (i * 37 + 9) % 90, size = 30 + (i * 13) % 30, rise = 80 + (i * 17) % 55, spin = 45 + (i * 11) % 75;
+    var tone = tones[i % tones.length];
+    html += '<span class="sci" style="left:' + left + '%;width:' + size + 'px;--rise:' + rise + 's;--delay:-' + Math.round(i * rise / order.length) + 's;--spin:' + spin + 's;--dir:' + (i % 2 ? 'reverse' : 'normal') + ';--tone:' + tone[0] + ';--op:' + tone[1] + '">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true">' + S[name] + '</svg></span>';
+  });
+  var layer = document.createElement('div');
+  layer.id = 'sci-bg'; layer.className = 'sci-layer'; layer.setAttribute('aria-hidden', 'true');
+  layer.innerHTML = html;
+  document.body.insertBefore(layer, document.body.firstChild);
+})();
+
 applyAppearance();
 checkReturn();
 document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') { checkReturn(); if (!S.modal) softRender(); } });
